@@ -4,31 +4,30 @@
 <head>
 <title>Timed Coding Quiz</title>
 
-    <button id="startGame">START</button>
+    <div class="timer" id="timer">!</div>
+    <button id="startQuiz">START</button>
     <button id="highScores">HIGH SCORES</button>
   
-<p>Please note: This is a timed coding quiz where you will have seconds to answer each question.<br>
+<p class="instructions">This is a timed coding quiz. You will have 25 seconds to answer FIVE questions.<br>
 Keep in mind, for every incorrect answer you choose, you will be deducted 10 seconds. <br>
-If you answer correctly, 10 seconds will be added. <br>
+If you answer correctly, 5 seconds will be added back on. <br>
 GOOD LUCK!</p>
 </head>
 
 <body background="Assets\images\background.png"></img>
 <main>
-    <h2 class="box" id="question">Commonly used data types DO NOT include:  strings, booleans, alerts, numbers</h2>
+    <h2 class="box" id="question-prompt">Q U I Z  -  T I M E !</h2>
     <br>
-    <button id="answers">a</button>
-    <br>
-    <button id="answers">b</button>
-    <br> 
-    <button id="answers">c</button>
-    <br> 
-    <button id="answers">d</button>
+    <div id="answers-holder"></div>
     <br>
 </main>
-<audio controls loop autoplay>
-    <source src="Assets\audio\tickingtimer.mp3" type="audio/mpeg">
-</audio>
+<div class="container">
+<div class="score">
+    <span id="user-score">US: 0</span> <br>
+    <span id="total-score">HS: 3</span>
+</div>
+</div>
 </body>
+<footer></footer>
 <script src="script.js"></script>
 </html>
