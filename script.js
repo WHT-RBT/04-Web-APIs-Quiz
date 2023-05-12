@@ -51,8 +51,9 @@ function displayQuestion() {
     choicesElement.setAttribute('value', choices[i]);
     choicesElement.addEventListener("click",isCorrectAnswer);
     answersHolder.append(choicesElement);
-  }
+      }
 }
+
 // correct answer function
 function isCorrectAnswer(event) {
   console.log(event.target);
@@ -72,9 +73,8 @@ const wrongaudio = new Audio("./Assets/audio/wrongaudio.wav");
   alert("INCORRECT! -10 SECONDS!");
   wrongaudio.play();
   removeTime(); // remove 10 seconds if the answer is incorrect
-}
-userScore.innerHTML = score; 
-}
+} }
+
 function addTime() {
   secondsRemaining += 5;
 }
@@ -86,20 +86,32 @@ function removeTime() {
   }
 }
 
-// next question function
+//next question function
 
 function nextQuestion() {
-  currentQuestion++;
+  // randomly select a new question
+  var newQuestionIndex = Math.floor(Math.random() * questionBank.length);
+  while (newQuestionIndex == currentQuestion) {
+    newQuestionIndex = Math.floor(Math.random() * questionBank.length);
+  }
+  currentQuestion = newQuestionIndex;
 
   if (currentQuestion < questionBank.length) {
-    currentQuestion = questionBank[currentQuestion];
+     displayQuestion();
+  }
+  else {
+    displayFinalScore();
   }
 }
 
 // end quiz function
 function endQuiz() {
-  // redirect/reload??
-}
+  clearInterval(timer);
+  alert(`GAME OVER! Your final score is ${score}`);
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem('highScore', highScore);
+  }}
 
 //function to get the users score
 function getScore() {
@@ -119,9 +131,9 @@ function saveScore() {
 
 let questionBank = [
   {
-    prompt: "How do you print 'Hello World' in the console?",
-    answers: ["msgbox.('Hello World')", "alertbox.('Hello World')", "log('Hello World').console", "console.log('Hello World')"],
-    correctAnswer: ["console.log('Hello World')"],
+  prompt: "How do you print 'Hello World' in the console?",
+  answers: ["msgbox.('Hello World')", "alertbox.('Hello World')", "log('Hello World').console", "console.log('Hello World')"],
+  correctAnswer: ["console.log('Hello World')"],
   },
   {
   prompt: "What type of Pop up boxes are available in JavaScript?",
