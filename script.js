@@ -41,54 +41,81 @@ function startTimer() {
 //Display of quiz questions
 function displayQuestion() {
 
-    document.getElementById("question-prompt").innerHTML = questionBank[currentQuestion].prompt
+    document.getElementById("question-prompt").innerHTML = questionBank[currentQuestion].prompt;
 
   var choices = questionBank[currentQuestion].answers;
-  var answersHolder = document.getElementById("answers-holder")
+  var answersHolder = document.getElementById("answers-holder");
   for (var i = 0; i < choices.length; i++) {
     var choicesElement = document.createElement("button");
     choicesElement.textContent = choices[i];
-    choicesElement.addEventListener("click",isCorrectAnswer)
-    answersHolder.append(choicesElement)
+    choicesElement.setAttribute('value', choices[i]);
+    choicesElement.addEventListener("click",isCorrectAnswer);
+    answersHolder.append(choicesElement);
   }
 }
-
-//10 seconds removed for incorrect answers
-//userScore and save/display scoresit comm
+// correct answer function
 function isCorrectAnswer(event) {
   console.log(event.target);
+  var buttonEl = event.target;
 
-//need to add sound effects for wrong or correct answers
+//sound effects for wrong or correct answers
 const correctaudio = new Audio("./Assets/audio/correctaudio.wav");
 const wrongaudio = new Audio("./Assets/audio/wrongaudio.wav");
 
-// create a variable that is going to hold the text content of event target
-// compare that git variable to what the correct answer is
-
-  if (event) {
+// variable/event target for incorrect
+  if (buttonEl.value === questionBank[currentQuestion].correctAnswer[0]) {
     alert("Correct! Good Job! +5 seconds!");
     correctaudio.play();
-  }
-  else {
-    alert("INCORRECT! -10 SECONDS!");
-    wrongaudio.play();
+    addTime(); // add 5 seconds if the answer is correct
+  score += 10; // update the score if the answer is correct
+  } else {
+  alert("INCORRECT! -10 SECONDS!");
+  wrongaudio.play();
+  removeTime(); // remove 10 seconds if the answer is incorrect
+}
+userScore.innerHTML = score; 
+}
+function addTime() {
+  secondsRemaining += 5;
+}
+
+function removeTime() {
+  secondsRemaining -= 10;
+  if (secondsRemaining < 0) {
+    secondsRemaining = 0; // set secondsRemaining to zero if it becomes negative
   }
 }
-// function addTime() {
-//   secondsRemaining += 5;
-// }
-// function removeTime() {
-//   secondsRemaining -= 10;
-// }
-// function getScore() {
-//   return secondsRemaining;
-// }
-// localStorage.setItem("Score", secondsRemaining);
 
-// function getUserInfo() {
-// }
-// function saveScore() {
-// }
+// next question function
+
+function nextQuestion() {
+  currentQuestion++;
+
+  if (currentQuestion < questionBank.length) {
+    currentQuestion = questionBank[currentQuestion];
+  }
+}
+
+// end quiz function
+function endQuiz() {
+  // redirect/reload??
+}
+
+//function to get the users score
+function getScore() {
+  return secondsRemaining;
+}
+
+//function to save the users score in local storage
+function saveScore() {
+  const name = prompt("Please enter your name:");
+  if (name) {
+    const scores = JSON.parse(localStorage.getItem("scores")) || [];
+    scores.push({ name, score: getScore() });
+    localStorage.setItem("scores", JSON.stringify(scores));
+    displayHighScores(); 
+  }
+}
 
 let questionBank = [
   {
