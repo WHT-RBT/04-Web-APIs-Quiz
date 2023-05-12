@@ -12,7 +12,7 @@ Clicking the Start button will hide the Start and High Scores button and quiz in
 
 The timer will then be on display in the top left corner of the screen, with timer ticking audio that will play on a loop throughout the quiz.
 
-The user will have 40 seconds to complete the 5 question quiz.
+The user will have 25 seconds to complete the 5 question quiz.
 
 The user will then be presented with their first question with a list of four multiple answers.
 
